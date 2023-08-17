@@ -1,35 +1,35 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+// Packages
+import {
+    Route,
+    createBrowserRouter,
+    createRoutesFromElements,
+    RouterProvider,
+} from "react-router-dom";
 
-function App() {
-  const [count, setCount] = useState(0)
+// Pages
+import Clientpage from "./Resource/View/ClientPage/Client.page";
 
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+// Views
+import Homeview from "./Resource/View/ClientPage/Home/Home.view";
+import Rootview from "./Resource/View/Root/Root.view";
 
-export default App
+const routers = createBrowserRouter(
+    createRoutesFromElements(
+        <Route element={<Rootview />} path="/">
+            <Route element={<Clientpage />} path="/">
+                <Route element={<Homeview />} path="/home"></Route>
+            </Route>
+
+            <Route element={<>Dashboard</>} path="/dashboard">
+                <Route element={<>Dashboard 1</>} path="/dashboard/1"></Route>
+                <Route element={<>Dashboard 2</>} path="/dashboard/2"></Route>
+            </Route>
+        </Route>
+    )
+);
+
+const App = () => {
+    return <RouterProvider router={routers} />;
+};
+
+export default App;
