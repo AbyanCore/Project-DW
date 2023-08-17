@@ -4,20 +4,39 @@ import {
     createBrowserRouter,
     createRoutesFromElements,
     RouterProvider,
+    Outlet,
 } from "react-router-dom";
 
 // Pages
 import Clientpage from "./Resource/View/ClientPage/Client.page";
 
 // Views
-import Homeview from "./Resource/View/ClientPage/Home/Home.view";
 import Rootview from "./Resource/View/Root/Root.view";
 
 const routers = createBrowserRouter(
     createRoutesFromElements(
         <Route element={<Rootview />} path="/">
-            <Route element={<Clientpage />} path="/">
-                <Route element={<Homeview />} path="/home"></Route>
+            <Route path="/" element={<Outlet />}>
+                <Route
+                    path="/"
+                    element={<Clientpage scrollToSection="home" />}
+                />
+                <Route
+                    path="/Home"
+                    element={<Clientpage scrollToSection="home" />}
+                />
+                <Route
+                    path="/Description"
+                    element={<Clientpage scrollToSection="description" />}
+                />
+                <Route
+                    path="/Detail"
+                    element={<Clientpage scrollToSection="detail" />}
+                />
+                <Route
+                    path="/Feedback"
+                    element={<Clientpage scrollToSection="feedback" />}
+                />
             </Route>
 
             <Route element={<>Dashboard</>} path="/dashboard">
