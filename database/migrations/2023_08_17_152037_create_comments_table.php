@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('user_id');
             $table->foreignId('place_id');
             $table->text('comment');
-            $table->timestamp('created_at');
+            $table->timestamps();
         });
     }
 

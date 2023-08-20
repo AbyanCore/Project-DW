@@ -14,17 +14,18 @@ return new class extends Migration
         Schema::create('places', function (Blueprint $table) {
             $table->id();
             $table->foreignId('category_id');
+            $table->foreignId('user_id');
             $table->string('name');
             $table->text('description');
             $table->string('locate');
             $table->string('Mainimage');
-            $table->string('image_Sec1');
-            $table->string('image_Sec2');
-            $table->string('image_Sec3');
+            $table->string('image_Sec1')->nullable();
+            $table->string('image_Sec2')->nullable();
+            $table->string('image_Sec3')->nullable();
             $table->string('open_at');
             $table->string('close_at');
             $table->integer('ticket_price');
-            $table->timestamp('created_at');
+            $table->timestamps();
         });
     }
 
