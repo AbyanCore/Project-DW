@@ -48,9 +48,9 @@ class UserController extends Controller
             'role_id' => 'required'
         ]);        
         
-        // if ($validator->fails()) {
-        //     return response()->json($validator->errors(), 422);
-        // }
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
 
         $user->update([
             'role_id'   => $request->role_id

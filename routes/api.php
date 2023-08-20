@@ -3,11 +3,13 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BlogController;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PlaceController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\RegisterController;
 
 /*
@@ -27,9 +29,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::apiResource('/blogs', BlogController::class);
 Route::apiResource('/places', PlaceController::class);
-Route::apiResource('/users', UserController::class);
 Route::apiResource('/orders', OrderController::class);
 Route::apiResource('/comments', CommentController::class);
+Route::apiResource('/users', UserController::class);
+Route::apiResource('/roles', RoleController::class);
+Route::apiResource('/categories', CategoryController::class);
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
