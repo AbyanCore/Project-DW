@@ -9,11 +9,16 @@ import {
 
 // Pages
 import Clientpage from "./Resource/View/ClientPage/Client.page";
+import Authpage from "./Resource/View/Auth/Auth.page";
+import Adminpage from "./Resource/View/AdminPage/Dashboard/Admin.Page";
 
 // Views
 import Rootview from "./Resource/View/Root/Root.view";
 import ClientLoader from "./Resource/View/ClientPage/Client.loader";
 import Notfoundview from "./Resource/View/ErrorPage/Notfound.view";
+import UnAuthorizeview from "./Resource/View/ErrorPage/UnAuthorize.view";
+import Loginview from "./Resource/View/Auth/Login/Login.view";
+import Registerview from "./Resource/View/Auth/Register/Register.view";
 
 const routers = createBrowserRouter(
     createRoutesFromElements(
@@ -46,13 +51,18 @@ const routers = createBrowserRouter(
                 />
             </Route>
 
-            <Route element={<>Dashboard</>} path="/dashboard">
+            <Route element={<Adminpage />} path="/dashboard">
                 <Route element={<>Dashboard 1</>} path="/dashboard/1"></Route>
                 <Route element={<>Dashboard 2</>} path="/dashboard/2"></Route>
             </Route>
 
             <Route element={<Notfoundview />} path="*"></Route>
-            <Route element={<>Not Authorized</>} path="/NotAuth"></Route>
+            <Route element={<UnAuthorizeview />} path="/UnAuthorized"></Route>
+
+            <Route path="/auth" element={<Authpage />}>
+                <Route path="login" element={<Loginview />}></Route>
+                <Route path="register" element={<Registerview />}></Route>
+            </Route>
         </Route>
     )
 );

@@ -1,6 +1,6 @@
 import { Button, Card, Rating } from "@material-tailwind/react";
 import { useContext, useEffect, useState } from "react";
-import { Link, useLoaderData } from "react-router-dom";
+import { Link, useLoaderData, useNavigate } from "react-router-dom";
 import { ClientPageContext } from "../Client.page";
 import { motion } from "framer-motion";
 
@@ -10,6 +10,8 @@ const Homeview = () => {
 
     const [EnableSidebar, setEnableSidebar] = useState(true);
     const [ScrollY, setScrollY] = useState(0);
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         window.addEventListener("scroll", () => {
@@ -28,7 +30,7 @@ const Homeview = () => {
     }, []);
 
     return (
-        <div className="w-full h-full relative overflow-hidden">
+        <div className="relative w-full h-full overflow-hidden">
             <motion.div
                 key={wisataselected}
                 initial={{ opacity: 0 }}
@@ -55,32 +57,38 @@ const Homeview = () => {
                     damping: 10,
                 }}
             >
-                <head className="z-10 absolute w-full p-2 flex flex-row items-center justify-center">
-                    <Card className="flex flex-row w-1/3 p-2 m-2 justify-around items-center bg-white bg-opacity-60 rounded-lg shadow-lg shadow-black/5 saturate-200 backdrop-blur-sm">
+                <head className="absolute z-10 flex flex-row items-center justify-center w-full p-2">
+                    <Card className="flex flex-row items-center justify-around w-1/3 p-2 m-2 bg-white rounded-lg shadow-lg bg-opacity-60 shadow-black/5 saturate-200 backdrop-blur-sm">
                         <span>
-                            <Link to="/Home" className="text-black font-bold">
+                            <Link to="/Home" className="font-bold text-black">
                                 Home
                             </Link>
                         </span>
-                        <hr className="border-l-2 border-l-gray-200 h-6" />
+                        <hr className="h-6 border-l-2 border-l-gray-200" />
                         <span>
                             <Link to="/Description">Description</Link>
                         </span>
-                        <hr className="border-l-2 border-l-gray-200 h-6" />
+                        <hr className="h-6 border-l-2 border-l-gray-200" />
                         <span>
                             <Link to="/Detail">Detail</Link>
                         </span>
-                        <hr className="border-l-2 border-l-gray-200 h-6" />
+                        <hr className="h-6 border-l-2 border-l-gray-200" />
                         <span>
                             <Link to="/Feedback">Feedback</Link>
                         </span>
                     </Card>
-                    <div className="flex flex-row justify-around items-center mx-5">
-                        <Button className="mr-2">Sign up</Button>
+                    <div className="flex flex-row items-center justify-around mx-5">
+                        <Button
+                            className="mr-2"
+                            onClick={() => navigate("/auth/register")}
+                        >
+                            Sign up
+                        </Button>
                         <Button
                             variant="outlined"
                             className="mr-2"
                             color="white"
+                            onClick={() => navigate("/auth/login")}
                         >
                             Sign in
                         </Button>
@@ -103,7 +111,7 @@ const Homeview = () => {
                         bottom: 0,
                     }}
                 >
-                    <div className=" w-full h-full flex flex-col justify-center p-20">
+                    <div className="flex flex-col justify-center w-full h-full p-20 ">
                         <h1 className="text-6xl font-bold text-white">
                             {data[wisataselected]?.title}
                         </h1>
@@ -145,7 +153,7 @@ const Homeview = () => {
                                             className="w-full rounded-l-lg"
                                             src={item.img}
                                         />
-                                        <h1 className="pt-2 font-bold text-md text-white">
+                                        <h1 className="pt-2 font-bold text-white text-md">
                                             {item.title}
                                         </h1>
                                         <Rating
