@@ -22,7 +22,7 @@ const Clientpage: React.FC<ClientParam> = ({ scrollToSection }) => {
     const location = useLocation();
     const navigate = useNavigate();
 
-    const [wisataselected, setwisataselected] = useState(1);
+    const [wisataselected, setwisataselected] = useState(0);
 
     const [EnableScrollToTop, setEnableScrollToTop] = useState(false);
 
@@ -56,7 +56,7 @@ const Clientpage: React.FC<ClientParam> = ({ scrollToSection }) => {
 
     useEffect(() => {
         window.addEventListener("scroll", () => {
-            if (window.scrollY > window.screen.height / 2) {
+            if (window.scrollY > window.screen.height * 0.7) {
                 setEnableScrollToTop(true);
             } else {
                 setEnableScrollToTop(false);
@@ -103,7 +103,9 @@ const Clientpage: React.FC<ClientParam> = ({ scrollToSection }) => {
                     </section>
                 </div>
 
-                <footer className="bg-red-400 h-24 w-screen">Footer</footer>
+                {/* <footer className="bg-black h-24 w-screen flex flex-row justify-between items-center p-2 px-10">
+                    <h1 className="text-white font-bold text-xl">Project DW</h1>
+                </footer> */}
             </div>
         </ClientPageContext.Provider>
     );

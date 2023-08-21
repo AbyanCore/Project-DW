@@ -1,34 +1,48 @@
-import {
-    Button,
-    Card,
-    CardBody,
-    CardHeader,
-    Rating,
-} from "@material-tailwind/react";
+import { Button, Card, Rating } from "@material-tailwind/react";
 import { useContext, useEffect, useState } from "react";
 import { Link, useLoaderData } from "react-router-dom";
 import { ClientPageContext } from "../Client.page";
 import { motion } from "framer-motion";
 
 const Homeview = () => {
-    const data = useLoaderData();
+    const data: Array<any> = useLoaderData() as Array<any>;
     const [wisataselected, setwisataselected] = useContext(ClientPageContext);
 
     const [EnableSidebar, setEnableSidebar] = useState(true);
+    const [ScrollY, setScrollY] = useState(0);
+
+    useEffect(() => {
+        window.addEventListener("scroll", () => {
+            if (window.scrollY > 10) {
+                setEnableSidebar(false);
+            } else {
+                setEnableSidebar(true);
+            }
+
+            setScrollY(window.scrollY);
+        });
+
+        return () => {
+            window.removeEventListener("scroll", () => {});
+        };
+    }, []);
 
     return (
-        <div className="w-full h-full">
+        <div className="w-full h-full relative overflow-hidden">
             <motion.div
                 key={wisataselected}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{
-                    duration: 0.5,
+                    duration: 0.2,
                 }}
             >
                 <img
-                    className="absolute w-full h-full -z-10 blur-[2px] scale-125 bg-cover "
-                    src={data?.find((item) => item.id == wisataselected)?.img}
+                    className="absolute -z-10 w-screen h-screen blur-[2px] scale-125 object-cover object-center bg-contain"
+                    src={
+                        data?.find((item: any) => item.id == wisataselected)
+                            ?.img
+                    }
                 ></img>
             </motion.div>
             <motion.div
@@ -41,18 +55,20 @@ const Homeview = () => {
                     damping: 10,
                 }}
             >
-                <head className="absolute w-full p-2 flex flex-row items-center justify-center">
-                    <Card className="flex flex-row w-1/3 p-2 m-2 justify-around items-center rounded-lg shadow-lg shadow-black/5 saturate-200 backdrop-blur-sm">
+                <head className="z-10 absolute w-full p-2 flex flex-row items-center justify-center">
+                    <Card className="flex flex-row w-1/3 p-2 m-2 justify-around items-center bg-white bg-opacity-60 rounded-lg shadow-lg shadow-black/5 saturate-200 backdrop-blur-sm">
                         <span>
-                            <Link to="/Home">Home</Link>
-                        </span>
-                        <hr className="border-l-2 border-l-gray-200 h-6" />
-                        <span>
-                            <Link to="/Detail">Detail</Link>
+                            <Link to="/Home" className="text-black font-bold">
+                                Home
+                            </Link>
                         </span>
                         <hr className="border-l-2 border-l-gray-200 h-6" />
                         <span>
                             <Link to="/Description">Description</Link>
+                        </span>
+                        <hr className="border-l-2 border-l-gray-200 h-6" />
+                        <span>
+                            <Link to="/Detail">Detail</Link>
                         </span>
                         <hr className="border-l-2 border-l-gray-200 h-6" />
                         <span>
@@ -87,7 +103,7 @@ const Homeview = () => {
                         bottom: 0,
                     }}
                 >
-                    <div className="w-full h-full flex flex-col justify-center p-20">
+                    <div className=" w-full h-full flex flex-col justify-center p-20">
                         <h1 className="text-6xl font-bold text-white">
                             {data[wisataselected]?.title}
                         </h1>
@@ -97,8 +113,7 @@ const Homeview = () => {
                     </div>
                 </motion.div>
                 <div
-                    className={`absolute h-full duration-500 right-0 overflow-y-auto w-80 bg-gradient-to-l from-black to-transparent p-2 
-                        ${EnableSidebar ? "opacity-100" : "opacity-0"}`}
+                    className={`absolute h-[85%] duration-500 right-0 overflow-y-auto w-80 bg-gradient-to-bl from-black to-transparent from-[10%] to-[50%] p-2 `}
                 >
                     {data
                         .filter((item) => item.id != wisataselected)
@@ -106,31 +121,28 @@ const Homeview = () => {
                             return (
                                 <motion.div
                                     initial={{ opacity: 0, x: 200 }}
-                                    animate={{ opacity: 1, x: 0 }}
                                     whileHover={{ scale: 1.05 }}
                                     transition={{
                                         duration: 1,
                                         type: "spring",
                                         stiffness: 400,
-                                        damping: 10,
+                                        damping: 100,
                                     }}
-                                    drag="x"
-                                    dragConstraints={{
-                                        top: 0,
-                                        left: 0,
-                                        right: 0,
-                                        bottom: 0,
+                                    whileInView={{
+                                        opacity: 1,
+                                        x: ScrollY,
                                     }}
                                 >
                                     <Card
-                                        className="flex flex-col w-full m-4 items-center rounded-lg shadow-lg bg-transparent shadow-black/5 saturate-100 backdrop-blur-sm "
-                                        onClick={() =>
-                                            setwisataselected(item.id)
-                                        }
+                                        className={`flex flex-col w-full m-4 items-center rounded-l-lg shadow-lg bg-transparent shadow-black/5 saturate-100 backdrop-blur-sm `}
+                                        onClick={() => {
+                                            console.log(item);
+                                            setwisataselected(item.id);
+                                        }}
                                         shadow={true}
                                     >
                                         <img
-                                            className="w-full rounded-t-lg rounded-r-lg"
+                                            className="w-full rounded-l-lg"
                                             src={item.img}
                                         />
                                         <h1 className="pt-2 font-bold text-md text-white">
@@ -148,7 +160,17 @@ const Homeview = () => {
                         })}
                 </div>
             </main>
-            <footer></footer>
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 1440 320"
+                className="absolute -bottom-1"
+            >
+                <path
+                    fill="black"
+                    fill-opacity="1"
+                    d="M0,96L48,133.3C96,171,192,245,288,266.7C384,288,480,256,576,229.3C672,203,768,181,864,176C960,171,1056,181,1152,181.3C1248,181,1344,171,1392,165.3L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"
+                ></path>
+            </svg>
         </div>
     );
 };

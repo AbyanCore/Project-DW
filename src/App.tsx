@@ -13,6 +13,7 @@ import Clientpage from "./Resource/View/ClientPage/Client.page";
 // Views
 import Rootview from "./Resource/View/Root/Root.view";
 import ClientLoader from "./Resource/View/ClientPage/Client.loader";
+import Notfoundview from "./Resource/View/ErrorPage/Notfound.view";
 
 const routers = createBrowserRouter(
     createRoutesFromElements(
@@ -49,6 +50,9 @@ const routers = createBrowserRouter(
                 <Route element={<>Dashboard 1</>} path="/dashboard/1"></Route>
                 <Route element={<>Dashboard 2</>} path="/dashboard/2"></Route>
             </Route>
+
+            <Route element={<Notfoundview />} path="*"></Route>
+            <Route element={<>Not Authorized</>} path="/NotAuth"></Route>
         </Route>
     )
 );
