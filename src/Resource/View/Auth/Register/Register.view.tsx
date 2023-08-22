@@ -55,7 +55,7 @@ const Registerview = () => {
                         </h1>
                     </CardHeader>
                     <CardBody className="flex flex-col">
-                        <form className="flex flex-col gap-2" action="#">
+                        <div className="flex flex-col gap-2">
                             <Input
                                 label="Username"
                                 size="lg"
@@ -75,7 +75,7 @@ const Registerview = () => {
                             <Button type="submit" onClick={onLoginHandler}>
                                 Register
                             </Button>
-                        </form>
+                        </div>
                     </CardBody>
                 </Card>
             </div>

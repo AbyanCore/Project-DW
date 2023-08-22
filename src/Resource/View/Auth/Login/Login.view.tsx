@@ -55,7 +55,7 @@ const Loginview = () => {
                         </h1>
                     </CardHeader>
                     <CardBody className="flex flex-col">
-                        <form className="flex flex-col gap-2" action="#">
+                        <div className="flex flex-col gap-2">
                             <Input
                                 label="Username"
                                 size="lg"
@@ -75,7 +75,7 @@ const Loginview = () => {
                             <Button type="submit" onClick={onLoginHandler}>
                                 Login
                             </Button>
-                        </form>
+                        </div>
                     </CardBody>
                 </Card>
             </div>

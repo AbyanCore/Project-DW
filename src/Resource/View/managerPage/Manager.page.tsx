@@ -1,6 +1,6 @@
-import { RxHamburgerMenu } from "react-icons/rx";
 import { Card } from "@material-tailwind/react";
-import { useState } from "react";
+import React, { useState } from "react";
+import { RxHamburgerMenu } from "react-icons/rx";
 import { Link, Outlet } from "react-router-dom";
 
 const tokenvalidator = (): boolean => {
@@ -11,10 +11,13 @@ const tokenvalidator = (): boolean => {
     return valid;
 };
 
-const Adminpage = () => {
+const Managerpage = () => {
     if (!tokenvalidator()) window.location.href = "/UnAuthorized";
 
     const [sideopen, setsideopen] = useState(true);
+    const [content, setcontent] = useState("Dashboard");
+
+    const onLogoutHandler = () => {};
 
     return (
         <div className="flex flex-row w-screen h-screen">
@@ -26,43 +29,48 @@ const Adminpage = () => {
                 }`}
             >
                 <Card className="p-2 mb-10 bg-[#435334] shadow-l shadow-[#9EB384]">
-                    <h1 className="font-bold text-[#CEDEBD]">Admin Panel</h1>
+                    <h1 className="font-bold text-[#CEDEBD] text-center">
+                        Manager
+                    </h1>
                 </Card>
                 <div className="flex flex-col items-center gap-2 p-2">
                     <Link
-                        to="#"
+                        to="/manage/main"
+                        onClick={() => setcontent("Dashboard")}
                         className="p-2 w-full text-center hover:saturate-200 hover:scale-105 duration-100 font-bold text-[#435334] rounded-xl cursor-pointer"
                     >
                         Dashboard
                     </Link>
                     <Link
-                        to="#"
+                        to="/manage/managewisata"
+                        onClick={() => setcontent("Kelola Wisata")}
                         className="p-2 w-full text-center hover:saturate-200 hover:scale-105 duration-100 font-bold text-[#435334] rounded-xl cursor-pointer"
                     >
-                        Configure
+                        kelola wisata
                     </Link>
                     <Link
-                        to="#"
+                        to="/manage/komentar"
+                        onClick={() => setcontent("Kelola Komentar")}
                         className="p-2 w-full text-center hover:saturate-200 hover:scale-105 duration-100 font-bold text-[#435334] rounded-xl cursor-pointer"
                     >
-                        Comment
+                        komentar
                     </Link>
                     <hr className="w-full border-[#435334] border-b-1" />
                     <Link
-                        to="#"
+                        to="/Home"
                         className="p-2 w-full text-center hover:saturate-200 hover:scale-105 duration-100 font-bold text-[#435334] rounded-xl cursor-pointer"
                     >
                         Home
                     </Link>
-                    <Link
-                        to="#"
-                        className="p-2 w-full text-center hover:saturate-200 hover:scale-105 duration-100 font-bold text-[#435334] rounded-xl cursor-pointer"
+                    <button
+                        onClick={onLogoutHandler}
+                        className=" p-2 w-full text-center hover:saturate-200 hover:scale-105 duration-100 font-bold text-[#435334] rounded-xl cursor-pointer"
                     >
                         Log out
-                    </Link>
+                    </button>
                 </div>
             </div>
-            <div className="flex flex-col flex-grow w-full h-full bg-red-300">
+            <div className="flex flex-col flex-grow w-full h-full">
                 <div className="flex flex-row items-center gap-10 p-4 bg-[#9EB384]">
                     <div
                         className="p-1 scale-125 border-[#FAF1E4] border-2 rounded-xl cursor-pointer hover:scale-150 duration-100"
@@ -71,10 +79,10 @@ const Adminpage = () => {
                         <RxHamburgerMenu color="#FAF1E4" />
                     </div>
                     <h1 className="text-2xl font-bold text-[#435334]">
-                        Admin Page
+                        {content}
                     </h1>
                 </div>
-                <div className="w-full h-full">
+                <div className="w-full h-full overflow-auto">
                     <Outlet />
                 </div>
             </div>
@@ -82,4 +90,4 @@ const Adminpage = () => {
     );
 };
 
-export default Adminpage;
+export default Managerpage;
