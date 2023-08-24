@@ -6,18 +6,18 @@ import {
 import { useContext } from "react";
 import { ClientPageContext } from "../Client.page";
 import { useLoaderData } from "react-router-dom";
-import { Carousel, IconButton } from "@material-tailwind/react";
+import { Carousel } from "@material-tailwind/react";
 import { motion } from "framer-motion";
 
 const Descriptionview = () => {
     const data: Array<any> = useLoaderData() as Array<any>;
-    const [wisataselected, setwisataselected] = useContext(ClientPageContext);
+    const wisataselected = useContext(ClientPageContext);
 
     return (
         <div className="w-full h-full bg-black py-10">
             <div className="w-full h-full flex justify-evenly items-center flex-col">
-                <div className="w-full h-full flex flex-row items-center">
-                    <Carousel className="w-1/2 h-2/3 mr-10 rounded-r-3xl">
+                <div className="w-full h-full flex md:flex-row flex-col items-center">
+                    <Carousel className="md:w-1/2 flex-1 w-full h-2/3 md:rounded-r-3xl">
                         <img
                             className="h-full w-full object-cover object-center bg-contain"
                             src={data[wisataselected]?.img_sec[0]}
@@ -34,7 +34,7 @@ const Descriptionview = () => {
                             alt="nature image"
                         />
                     </Carousel>
-                    <div className="w-1/2 h-full flex items-center justify-center">
+                    <div className="md:w-1/2 md:h-full h-1/2 flex items-center justify-center">
                         <h1 className="font-semibold text-white text-2xl text-center">
                             {data[wisataselected]?.description}
                         </h1>
@@ -93,7 +93,11 @@ const Descriptionview = () => {
                     </div>
                 </footer>
             </div>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+            <svg
+                className="scale-0 md:scale-100 xl:scale-100 2xl:scale-100"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 1440 320"
+            >
                 <path
                     fill="#000000"
                     fill-opacity="1"

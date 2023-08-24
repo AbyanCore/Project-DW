@@ -1,3 +1,4 @@
+import { RxHamburgerMenu } from "react-icons/rx";
 import { Button, Card, Rating } from "@material-tailwind/react";
 import { useContext, useEffect, useState } from "react";
 import { Link, useLoaderData, useNavigate } from "react-router-dom";
@@ -8,19 +9,17 @@ const Homeview = () => {
     const data: Array<any> = useLoaderData() as Array<any>;
     const [wisataselected, setwisataselected] = useContext(ClientPageContext);
 
-    const [EnableSidebar, setEnableSidebar] = useState(true);
     const [ScrollY, setScrollY] = useState(0);
+    const [navopen, setnavopen] = useState(false);
+
+    const openNavHandler = () => {
+        setnavopen(!navopen);
+    };
 
     const navigate = useNavigate();
 
     useEffect(() => {
         window.addEventListener("scroll", () => {
-            if (window.scrollY > 10) {
-                setEnableSidebar(false);
-            } else {
-                setEnableSidebar(true);
-            }
-
             setScrollY(window.scrollY);
         });
 
@@ -30,7 +29,7 @@ const Homeview = () => {
     }, []);
 
     return (
-        <div className="relative w-full h-full overflow-hidden">
+        <div className="flex flex-col relative w-full h-full overflow-hidden">
             <motion.div
                 key={wisataselected}
                 initial={{ opacity: 0 }}
@@ -57,8 +56,58 @@ const Homeview = () => {
                     damping: 10,
                 }}
             >
-                <head className="absolute z-10 flex flex-row items-center justify-center w-full p-2">
-                    <Card className="flex flex-row items-center justify-around w-1/3 p-2 m-2 bg-white rounded-lg shadow-lg bg-opacity-60 shadow-black/5 saturate-200 backdrop-blur-sm">
+                <div className="absolute z-[11] w-full scale-100 h-max xl:scale-0 xl:h-0 bg-white shadow-lg bg-opacity-60 shadow-black/5 saturate-200 backdrop-blur-sm">
+                    <RxHamburgerMenu
+                        className="p-2 w-10 h-10"
+                        onClick={openNavHandler}
+                    />
+                    {navopen && (
+                        <div className="flex flex-col justify-center w-full h-full pl-10 pr-10 pb-2 pt-2">
+                            <span
+                                onClick={openNavHandler}
+                                className="hover:bg-blue-gray-200 duration-100 p-2 rounded-lg"
+                            >
+                                <Link to="/Home">Home</Link>
+                            </span>
+                            <span
+                                onClick={openNavHandler}
+                                className="hover:bg-blue-gray-200 duration-100 p-2 rounded-lg"
+                            >
+                                <Link to="/Description">Description</Link>
+                            </span>
+                            <span
+                                onClick={openNavHandler}
+                                className="hover:bg-blue-gray-200 duration-100 p-2 rounded-lg"
+                            >
+                                <Link to="/Detail">Detail</Link>
+                            </span>
+                            <span
+                                onClick={openNavHandler}
+                                className="hover:bg-blue-gray-200 duration-100 p-2 rounded-lg"
+                            >
+                                <Link to="/Feedback">Feedback</Link>
+                            </span>
+                            <div className="flex flex-row h-max w-full">
+                                <Button
+                                    className="mr-2 flex-1"
+                                    onClick={() => navigate("/auth/register")}
+                                >
+                                    Sign up
+                                </Button>
+                                <Button
+                                    variant="outlined"
+                                    className="mr-2 flex-1"
+                                    color="white"
+                                    onClick={() => navigate("/auth/login")}
+                                >
+                                    Sign in
+                                </Button>
+                            </div>
+                        </div>
+                    )}
+                </div>
+                <head className="absolute z-10 h-0 xl:h-max flex flex-row items-center justify-center w-full xl:p-2">
+                    <Card className="flex flex-row scale-0 xl:scale-100 items-center justify-around w-1/3 p-2 m-2 bg-white rounded-lg shadow-lg bg-opacity-60 shadow-black/5 saturate-200 backdrop-blur-sm">
                         <span>
                             <Link to="/Home" className="font-bold text-black">
                                 Home
@@ -77,7 +126,7 @@ const Homeview = () => {
                             <Link to="/Feedback">Feedback</Link>
                         </span>
                     </Card>
-                    <div className="flex flex-row items-center justify-around mx-5">
+                    <div className="flex flex-row scale-0 xl:scale-100 items-center justify-around mx-5">
                         <Button
                             className="mr-2"
                             onClick={() => navigate("/auth/register")}
@@ -95,7 +144,7 @@ const Homeview = () => {
                     </div>
                 </head>
             </motion.div>
-            <main className="flex flex-row w-full h-full">
+            <main className="flex flex-row w-full h-full justify-center items-center xl:justify-normal">
                 <motion.div
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
@@ -111,18 +160,24 @@ const Homeview = () => {
                         bottom: 0,
                     }}
                 >
-                    <div className="flex flex-col justify-center w-full h-full p-20 ">
-                        <h1 className="text-6xl font-bold text-white">
-                            {data[wisataselected]?.title}
+                    <div className="flex flex-col justify-center items-center w-full h-full xl:p-20">
+                        <h1 className="md:text-6xl text-5xl font-bold text-white ">
+                            {
+                                data?.find(
+                                    (item: any) => item.id == wisataselected
+                                )?.title
+                            }
                         </h1>
-                        <p className="text-2xl font-semibold text-white">
-                            {data[wisataselected]?.description}
+                        <p className="md:text-2xl font-semibold text-white text-center">
+                            {
+                                data?.find(
+                                    (item: any) => item.id == wisataselected
+                                )?.description
+                            }
                         </p>
                     </div>
                 </motion.div>
-                <div
-                    className={`absolute h-[85%] duration-500 right-0 overflow-y-auto w-80 bg-gradient-to-bl from-black to-transparent from-[10%] to-[50%] p-2 `}
-                >
+                <div className="absolute top-0 z-10 h-[85%] duration-500 right-0 overflow-y-auto w-80 bg-gradient-to-bl from-black to-transparent from-[10%] to-[50%] p-2">
                     {data
                         .filter((item) => item.id != wisataselected)
                         .map((item) => {
@@ -143,10 +198,9 @@ const Homeview = () => {
                                 >
                                     <Card
                                         className={`flex flex-col w-full m-4 items-center rounded-l-lg shadow-lg bg-transparent shadow-black/5 saturate-100 backdrop-blur-sm `}
-                                        onClick={() => {
-                                            console.log(item);
-                                            setwisataselected(item.id);
-                                        }}
+                                        onClick={() =>
+                                            setwisataselected(item.id)
+                                        }
                                         shadow={true}
                                     >
                                         <img

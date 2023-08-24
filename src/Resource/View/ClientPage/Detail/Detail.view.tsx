@@ -4,7 +4,7 @@ import { useContext } from "react";
 import { useLoaderData } from "react-router-dom";
 
 const Detailview = () => {
-    const [wisataselected, setwisataselected] = useContext(ClientPageContext);
+    const wisataselected = useContext(ClientPageContext);
     const data: Array<any> = useLoaderData() as Array<any>;
 
     return (

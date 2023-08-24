@@ -6,12 +6,25 @@ import {
     CardHeader,
     Input,
 } from "@material-tailwind/react";
-import React, { useEffect } from "react";
+import React from "react";
+import validator from "validator";
+import { Register } from "../../../../App/API/Auth.api";
 
-const onRegisterValidator = (username: string, password: string): boolean => {
+const onRegisterValidator = (
+    username: string,
+    password: string,
+    email: string
+): boolean => {
     let valid = false;
 
-    if (username === "admin" && password === "admin") valid = true;
+    if (
+        validator.isAlphanumeric(username) &&
+        !validator.isEmpty(password) &&
+        validator.isEmail(email)
+    ) {
+        Register(username, password, email);
+        valid = true;
+    }
 
     return valid;
 };
@@ -19,11 +32,12 @@ const onRegisterValidator = (username: string, password: string): boolean => {
 const Registerview = () => {
     const [username, setUsername] = React.useState<string>("");
     const [password, setPassword] = React.useState<string>("");
+    const [email, setEmail] = React.useState<string>("");
 
     const [valid, setValid] = React.useState<boolean>(true);
 
     const onLoginHandler = () => {
-        if (onRegisterValidator(username, password)) {
+        if (onRegisterValidator(username, password, email)) {
             setValid(true);
             window.history.back();
         } else {
@@ -31,10 +45,12 @@ const Registerview = () => {
 
             setUsername("");
             setPassword("");
+            setEmail("");
         }
 
         setUsername("");
         setPassword("");
+        setEmail("");
     };
 
     return (
@@ -56,6 +72,14 @@ const Registerview = () => {
                     </CardHeader>
                     <CardBody className="flex flex-col">
                         <div className="flex flex-col gap-2">
+                            <Input
+                                label="Email"
+                                size="lg"
+                                value={email}
+                                type="email"
+                                onChange={(e) => setEmail(e.target.value)}
+                                crossOrigin={undefined}
+                            />
                             <Input
                                 label="Username"
                                 size="lg"
