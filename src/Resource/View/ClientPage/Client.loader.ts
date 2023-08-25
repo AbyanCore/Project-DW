@@ -1,3 +1,6 @@
+import { useEffect, useState } from "react";
+import { GetPlaces } from "../../../App/API/Place.api";
+
 const dummydata = [
     {
         id: 0,
@@ -56,7 +59,19 @@ const dummydata = [
     },
 ];
 
-const ClientLoader = async () => {
+const ClientLoader = () => {
+    // const [data, setData] = useState([{}]);
+
+    // useEffect(() => {
+    //     const fetchData = async () => {
+    //         const res: any = await GetPlaces();
+
+    //         setData(res.data);
+    //     };
+
+    //     fetchData();
+    // }, []);
+
     return dummydata;
 };
 

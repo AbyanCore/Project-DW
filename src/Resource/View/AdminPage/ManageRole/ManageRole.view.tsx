@@ -1,4 +1,4 @@
-import { Card, Input, Typography } from "@material-tailwind/react";
+import { Card, Typography } from "@material-tailwind/react";
 import React, { useEffect } from "react";
 
 const ManageRoleview = () => {

@@ -1,3 +1,6 @@
+import { AiOutlineDashboard } from "react-icons/ai";
+import { BsReverseLayoutSidebarReverse } from "react-icons/bs";
+import { RxHamburgerMenu } from "react-icons/rx";
 import { Button, Card, Rating } from "@material-tailwind/react";
 import { useContext, useEffect, useState } from "react";
 import { Link, useLoaderData, useNavigate } from "react-router-dom";
@@ -8,19 +11,18 @@ const Homeview = () => {
     const data: Array<any> = useLoaderData() as Array<any>;
     const [wisataselected, setwisataselected] = useContext(ClientPageContext);
 
-    const [EnableSidebar, setEnableSidebar] = useState(true);
     const [ScrollY, setScrollY] = useState(0);
+    const [sidebaropen, setsidebaropen] = useState(false);
+    const [navopen, setnavopen] = useState(false);
+
+    const openNavHandler = () => {
+        setnavopen(!navopen);
+    };
 
     const navigate = useNavigate();
 
     useEffect(() => {
         window.addEventListener("scroll", () => {
-            if (window.scrollY > 10) {
-                setEnableSidebar(false);
-            } else {
-                setEnableSidebar(true);
-            }
-
             setScrollY(window.scrollY);
         });
 
@@ -30,7 +32,7 @@ const Homeview = () => {
     }, []);
 
     return (
-        <div className="relative w-full h-full overflow-hidden">
+        <div className="relative flex flex-col w-full h-full overflow-hidden">
             <motion.div
                 key={wisataselected}
                 initial={{ opacity: 0 }}
@@ -57,8 +59,76 @@ const Homeview = () => {
                     damping: 10,
                 }}
             >
-                <head className="absolute z-10 flex flex-row items-center justify-center w-full p-2">
-                    <Card className="flex flex-row items-center justify-around w-1/3 p-2 m-2 bg-white rounded-lg shadow-lg bg-opacity-60 shadow-black/5 saturate-200 backdrop-blur-sm">
+                <div className="absolute z-[11] w-full scale-100 h-max xl:scale-0 xl:h-0 bg-white shadow-lg bg-opacity-60 shadow-black/5 saturate-200 backdrop-blur-sm">
+                    <div className="flex flex-row justify-between">
+                        <RxHamburgerMenu
+                            className="w-10 h-10 p-2"
+                            onClick={openNavHandler}
+                        />
+                        <div className="flex flex-row">
+                            <AiOutlineDashboard
+                                className="w-10 h-10 p-2"
+                                onClick={() => navigate("/dashboard")}
+                            />
+                            <BsReverseLayoutSidebarReverse
+                                className="w-10 h-10 p-2"
+                                onClick={() => setsidebaropen(!sidebaropen)}
+                            />
+                        </div>
+                    </div>
+                    {navopen && (
+                        <div className="flex flex-col justify-center w-full h-full pt-2 pb-2 pl-10 pr-10">
+                            <span
+                                onClick={openNavHandler}
+                                className="p-2 duration-100 rounded-lg hover:border-white hover:border-2"
+                            >
+                                <Link to="/Home">Home</Link>
+                            </span>
+                            <span
+                                onClick={openNavHandler}
+                                className="p-2 duration-100 rounded-lg hover:border-white hover:border-2"
+                            >
+                                <Link to="/Description">Description</Link>
+                            </span>
+                            <span
+                                onClick={openNavHandler}
+                                className="p-2 duration-100 rounded-lg hover:border-white hover:border-2"
+                            >
+                                <Link to="/Detail">Detail</Link>
+                            </span>
+                            <span
+                                onClick={openNavHandler}
+                                className="p-2 duration-100 rounded-lg hover:border-white hover:border-2"
+                            >
+                                <Link to="/Feedback">Feedback</Link>
+                            </span>
+                            <div className="flex flex-row w-full h-max">
+                                <Button
+                                    className="flex-1 mr-2"
+                                    onClick={() => navigate("/auth/register")}
+                                >
+                                    Sign up
+                                </Button>
+                                <Button
+                                    variant="outlined"
+                                    className="flex-1 mr-2"
+                                    color="white"
+                                    onClick={() => navigate("/auth/login")}
+                                >
+                                    Sign in
+                                </Button>
+                            </div>
+                        </div>
+                    )}
+                </div>
+                <head className="absolute z-10 flex flex-row items-center justify-center w-full h-0 xl:h-max xl:p-2">
+                    <Card className="flex flex-row items-center justify-around scale-0 bg-white rounded-lg shadow-lg xl:scale-100 bg-opacity-60 shadow-black/5 saturate-200 backdrop-blur-sm">
+                        <BsReverseLayoutSidebarReverse
+                            className="w-10 h-10 p-2"
+                            onClick={() => setsidebaropen(!sidebaropen)}
+                        />
+                    </Card>
+                    <Card className="flex flex-row items-center justify-around w-1/3 p-2 m-2 scale-0 bg-white rounded-lg shadow-lg xl:scale-100 bg-opacity-60 shadow-black/5 saturate-200 backdrop-blur-sm">
                         <span>
                             <Link to="/Home" className="font-bold text-black">
                                 Home
@@ -77,25 +147,31 @@ const Homeview = () => {
                             <Link to="/Feedback">Feedback</Link>
                         </span>
                     </Card>
-                    <div className="flex flex-row items-center justify-around mx-5">
-                        <Button
-                            className="mr-2"
+                    <Card className="flex flex-row items-center justify-around scale-0 bg-white rounded-lg shadow-lg xl:scale-100 bg-opacity-60 shadow-black/5 saturate-200 backdrop-blur-sm">
+                        <AiOutlineDashboard
+                            className="w-10 h-10 p-2"
+                            onClick={() => navigate("/dashboard")}
+                        />
+                    </Card>
+                    <Card className="flex flex-row items-center justify-around p-2 m-2 scale-0 bg-white rounded-lg shadow-lg xl:scale-100 bg-opacity-60 shadow-black/5 saturate-200 backdrop-blur-sm">
+                        <button
+                            className="mx-2"
                             onClick={() => navigate("/auth/register")}
                         >
                             Sign up
-                        </Button>
-                        <Button
-                            variant="outlined"
-                            className="mr-2"
+                        </button>
+                        <hr className="h-6 border-l-2 border-l-gray-200" />
+                        <button
+                            className="mx-2"
                             color="white"
                             onClick={() => navigate("/auth/login")}
                         >
                             Sign in
-                        </Button>
-                    </div>
+                        </button>
+                    </Card>
                 </head>
             </motion.div>
-            <main className="flex flex-row w-full h-full">
+            <main className="flex flex-row items-center justify-center w-full h-full xl:justify-normal">
                 <motion.div
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
@@ -111,46 +187,54 @@ const Homeview = () => {
                         bottom: 0,
                     }}
                 >
-                    <div className="flex flex-col justify-center w-full h-full p-20 ">
-                        <h1 className="text-6xl font-bold text-white">
-                            {data[wisataselected]?.title}
+                    <div className="flex flex-col items-center justify-center w-full h-full xl:p-20">
+                        <h1 className="text-5xl font-bold text-white md:text-6xl ">
+                            {
+                                data?.find(
+                                    (item: any) => item.id == wisataselected
+                                )?.title
+                            }
                         </h1>
-                        <p className="text-2xl font-semibold text-white">
-                            {data[wisataselected]?.description}
+                        <p className="font-semibold text-center text-white md:text-2xl">
+                            {
+                                data?.find(
+                                    (item: any) => item.id == wisataselected
+                                )?.description
+                            }
                         </p>
                     </div>
                 </motion.div>
                 <div
-                    className={`absolute h-[85%] duration-500 right-0 overflow-y-auto w-80 bg-gradient-to-bl from-black to-transparent from-[10%] to-[50%] p-2 `}
+                    className={`${
+                        sidebaropen ? "translate-x-[500px]" : "translate-x-0"
+                    } absolute top-0 z-10 sm:h-[85%] h-screen duration-500 sm:right-0 overflow-y-auto w-screen sm:w-80 bg-gradient-to-bl from-black to-transparent from-[10%] to-[50%] p-2`}
                 >
                     {data
                         .filter((item) => item.id != wisataselected)
                         .map((item) => {
                             return (
                                 <motion.div
-                                    initial={{ opacity: 0, x: 200 }}
+                                    initial={{ x: 200 }}
                                     whileHover={{ scale: 1.05 }}
                                     transition={{
-                                        duration: 1,
+                                        duration: 0.5,
                                         type: "spring",
                                         stiffness: 400,
                                         damping: 100,
                                     }}
                                     whileInView={{
-                                        opacity: 1,
                                         x: ScrollY,
                                     }}
                                 >
                                     <Card
-                                        className={`flex flex-col w-full m-4 items-center rounded-l-lg shadow-lg bg-transparent shadow-black/5 saturate-100 backdrop-blur-sm `}
-                                        onClick={() => {
-                                            console.log(item);
-                                            setwisataselected(item.id);
-                                        }}
+                                        className="flex flex-col w-full sm:m-4 items-center sm:rounded-l-lg rounded-lg shadow-lg bg-transparent shadow-black/5 saturate-100 backdrop-blur-sm "
+                                        onClick={() =>
+                                            setwisataselected(item.id)
+                                        }
                                         shadow={true}
                                     >
                                         <img
-                                            className="w-full rounded-l-lg"
+                                            className="w-full rounded-lg sm:rounded-l-lg"
                                             src={item.img}
                                         />
                                         <h1 className="pt-2 font-bold text-white text-md">

@@ -2,7 +2,7 @@ import { Card, Typography } from "@material-tailwind/react";
 import React from "react";
 
 const ManageUserview = () => {
-    const [data, setData] = React.useState([{}]);
+    const [data, setdata] = React.useState([{}]);
 
     return (
         <div className="flex flex-col w-full h-full gap-4 p-4">

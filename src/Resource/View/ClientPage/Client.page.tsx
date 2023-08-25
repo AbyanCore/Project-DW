@@ -1,3 +1,9 @@
+import {
+    FaGithubSquare,
+    FaWhatsapp,
+    FaFacebook,
+    FaLinkedin,
+} from "react-icons/fa";
 import React, { useEffect, useRef, useState } from "react";
 import Homeview from "./Home/Home.view";
 import Descriptionview from "./Description/Description.view";
@@ -22,9 +28,10 @@ const Clientpage: React.FC<ClientParam> = ({ scrollToSection }) => {
     const location = useLocation();
     const navigate = useNavigate();
 
-    const [wisataselected, setwisataselected] = useState(0);
+    const [wisataselected, setwisataselected] = useState(1);
 
     const [EnableScrollToTop, setEnableScrollToTop] = useState(false);
+    const [ScrollY, setScrollY] = useState(0);
 
     useEffect(() => {
         let targetSectionRef: React.RefObject<HTMLElement | null> | null = null;
@@ -61,6 +68,8 @@ const Clientpage: React.FC<ClientParam> = ({ scrollToSection }) => {
             } else {
                 setEnableScrollToTop(false);
             }
+
+            setScrollY(window.scrollY);
         });
 
         return () => {
@@ -71,17 +80,15 @@ const Clientpage: React.FC<ClientParam> = ({ scrollToSection }) => {
     return (
         <ClientPageContext.Provider value={[wisataselected, setwisataselected]}>
             <div>
-                {EnableScrollToTop && (
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ duration: 0.5 }}
-                        className="cursor-pointer fixed bg-gray-500 flex items-center justify-center bottom-0 left-0 m-10 w-10 h-10 rounded-full"
-                        onClick={() => navigate("/Home")}
-                    >
-                        <AiOutlineArrowUp />
-                    </motion.div>
-                )}
+                <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: EnableScrollToTop ? 1 : ScrollY }}
+                    className="z-10 cursor-pointer fixed bg-gray-500 flex items-center justify-center bottom-0 left-0 m-10 w-10 h-10 rounded-full"
+                    onClick={() => navigate("/Home")}
+                >
+                    <AiOutlineArrowUp />
+                </motion.div>
+
                 <div className="overflow-x-hidden">
                     <section ref={HomeSection} className="w-screen h-screen">
                         <Homeview />
@@ -103,9 +110,15 @@ const Clientpage: React.FC<ClientParam> = ({ scrollToSection }) => {
                     </section>
                 </div>
 
-                {/* <footer className="bg-black h-24 w-screen flex flex-row justify-between items-center p-2 px-10">
+                <footer className="bg-black h-24 w-screen flex flex-row justify-between items-center p-2 px-10">
                     <h1 className="text-white font-bold text-xl">Project DW</h1>
-                </footer> */}
+                    <div className="flex flex-row gap-x-4">
+                        <FaGithubSquare className="w-8 h-8" color="white" />
+                        <FaWhatsapp className="w-8 h-8" color="white" />
+                        <FaFacebook className="w-8 h-8" color="white" />
+                        <FaLinkedin className="w-8 h-8" color="white" />
+                    </div>
+                </footer>
             </div>
         </ClientPageContext.Provider>
     );

@@ -1,4 +1,3 @@
-import Cookies from "js-cookie";
 import { Outlet } from "react-router-dom";
 
 const validator = (): boolean => {

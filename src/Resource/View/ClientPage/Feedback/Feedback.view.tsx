@@ -36,22 +36,16 @@ const datadummy = [
 const Feedbackview = () => {
     const [data, setdata] = useState(datadummy);
 
+    const [addfeedbackpopup, setaddfeedbackpopup] = useState(false);
+
     return (
-        <div className="w-full h-full bg-blue-400">
-            <div className="flex justify-center items-center h-full w-full">
-                <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{
-                        type: "spring",
-                        stiffness: 400,
-                        damping: 10,
-                    }}
-                >
-                    <div className="flex flex-row flex-wrap p-2 justify-center">
+        <div className="w-full h-full bg-blue-400 ">
+            <div className="flex items-center justify-center w-full h-full">
+                {addfeedbackpopup && (
+                    <div className="absolute z-[11] w-screen h-screen bg-black bg-opacity-50 flex justify-center items-center saturate-100 backdrop-blur-sm">
                         <Card className="mx-2 my-5 h-max">
-                            <CardHeader className="bg-black p-3">
-                                <h1 className="font-bold text-orange-300 text-center">
+                            <CardHeader className="p-3 bg-black">
+                                <h1 className="font-bold text-center text-orange-300">
                                     Tambah Feedback
                                 </h1>
                             </CardHeader>
@@ -61,18 +55,43 @@ const Feedbackview = () => {
                                 </h1>
                                 <Textarea label="Feedback" maxLength={400} />
                             </CardBody>
-                            <CardFooter className="flex justify-center">
+                            <CardFooter className="flex justify-center gap-4">
+                                <Button
+                                    className="w-max"
+                                    onClick={() => setaddfeedbackpopup(false)}
+                                >
+                                    Kembali
+                                </Button>
                                 <Button className="w-full">Tambahkan</Button>
                             </CardFooter>
                         </Card>
-                        <Card className="mx-2 my-5 w-auto">
-                            <CardHeader className="bg-black p-3">
-                                <h1 className="font-bold text-orange-300 text-center">
-                                    Feedback List
+                    </div>
+                )}
+                <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{
+                        type: "spring",
+                        stiffness: 400,
+                        damping: 10,
+                    }}
+                >
+                    <div className="flex flex-row justify-center p-2">
+                        <Card className="w-auto mx-2 my-5">
+                            <div className="p-4 px-10 rounded-t-xl items-center bg-black flex flex-row justify-between">
+                                <h1 className="font-bold text-center text-orange-300">
+                                    Feedback Terbaru
                                 </h1>
-                            </CardHeader>
-                            <CardBody className="p-2 justify-center flex flex-col overflow-y-auto">
-                                {data.map((item) => {
+                                <Button
+                                    color="white"
+                                    variant="outlined"
+                                    onClick={() => setaddfeedbackpopup(true)}
+                                >
+                                    Tambah
+                                </Button>
+                            </div>
+                            <div className="flex flex-col p-6 overflow-y-auto gap-4">
+                                {data.slice(0, 3).map((item: any) => {
                                     return (
                                         <motion.div
                                             initial={{
@@ -91,8 +110,8 @@ const Feedbackview = () => {
                                                 x: 0,
                                             }}
                                         >
-                                            <Card className="m-2 flex flex-col p-2">
-                                                <h1 className="font-semibold text-xl">
+                                            <Card className="flex flex-col p-2 shadow-xl">
+                                                <h1 className="text-xl font-semibold">
                                                     {item.username}
                                                 </h1>
                                                 <h1 className="text-sm">
@@ -105,7 +124,7 @@ const Feedbackview = () => {
                                         </motion.div>
                                     );
                                 })}
-                            </CardBody>
+                            </div>
                         </Card>
                     </div>
                 </motion.div>

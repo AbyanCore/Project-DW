@@ -1,4 +1,4 @@
-import { Card, CardBody, CardHeader } from "@material-tailwind/react";
+import { Card, CardBody } from "@material-tailwind/react";
 import { ClientPageContext } from "../Client.page";
 import { useContext } from "react";
 import { useLoaderData } from "react-router-dom";
@@ -8,26 +8,26 @@ const Detailview = () => {
     const data: Array<any> = useLoaderData() as Array<any>;
 
     return (
-        <div className="w-full h-full bg-yellow-400 p-0">
-            <div className="flex justify-center items-center h-full">
-                <Card className="m-10 overflow-hidden w-5/6 h-1/3 shadow-2xl">
-                    <CardBody className="p-0 h-full">
-                        <div className="w-full h-full flex flex-row">
+        <div className="w-full h-full p-0 bg-yellow-400">
+            <div className="flex items-center justify-center h-full">
+                <Card className="w-5/6 m-10 overflow-hidden shadow-2xl h-1/3">
+                    <CardBody className="h-full p-0">
+                        <div className="flex flex-row w-full h-full">
                             <img
-                                className="object-cover object-center bg-contain w-1/3 h-full"
+                                className="object-cover object-center w-1/3 h-full bg-contain"
                                 src={data[wisataselected]?.img}
                             />
-                            <div className="w-2/3 h-full flex flex-col p-5">
-                                <h1 className="font-bold text-2xl">
+                            <div className="flex flex-col w-2/3 h-full p-5">
+                                <h1 className="text-2xl font-bold">
                                     {data[wisataselected]?.title}
                                 </h1>
-                                <h1 className="font-semibold text-xl">
+                                <h1 className="text-xl font-semibold">
                                     {data[wisataselected]?.location}
                                 </h1>
-                                <h1 className="font-semibold text-xl">
+                                <h1 className="text-xl font-semibold">
                                     {data[wisataselected]?.price}
                                 </h1>
-                                <h1 className="font-semibold text-xl">
+                                <h1 className="text-xl font-semibold">
                                     {data[wisataselected]?.rating}
                                 </h1>
                             </div>

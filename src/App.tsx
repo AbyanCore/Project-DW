@@ -36,7 +36,6 @@ const routers = createBrowserRouter(
                     element={<Clientpage scrollToSection="home" />}
                 />
                 <Route
-                    index
                     path="Home"
                     loader={ClientLoader}
                     element={<Clientpage scrollToSection="home" />}
