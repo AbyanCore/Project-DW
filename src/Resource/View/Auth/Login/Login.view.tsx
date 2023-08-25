@@ -7,6 +7,7 @@ import {
     Input,
 } from "@material-tailwind/react";
 import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const onLoginValidator = (username: string, password: string): boolean => {
     let valid = false;
@@ -21,6 +22,7 @@ const Loginview = () => {
     const [password, setPassword] = React.useState<string>("");
 
     const [valid, setValid] = React.useState<boolean>(true);
+    const navigate = useNavigate();
 
     const onLoginHandler = () => {
         if (onLoginValidator(username, password)) {
@@ -75,6 +77,12 @@ const Loginview = () => {
                             <Button type="submit" onClick={onLoginHandler}>
                                 Login
                             </Button>
+                            <div className="flex flex-row justify-between gap-2">
+                                <Button className="flex-1">Register</Button>
+                                <Button onClick={() => navigate("/Home")}>
+                                    Back
+                                </Button>
+                            </div>
                         </div>
                     </CardBody>
                 </Card>
